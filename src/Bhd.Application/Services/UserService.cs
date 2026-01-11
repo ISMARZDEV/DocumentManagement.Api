@@ -42,7 +42,7 @@ public class UserService : IUserService
             throw new UnauthorizedException("El email ingresado no existe.");
         }
 
-        if (!_passwordHasher.VerifyPassword(userLoginDto.Password, user.Password))
+        if (!_passwordHasher.VerifyPassword(userLoginDto.Password, user.PasswordHash))
         {
             throw new UnauthorizedException("La contraseña es incorrecta.");
         }
@@ -61,7 +61,7 @@ public class UserService : IUserService
         }
 
         var user = _mapper.Map<User>(userCreateDto);
-        user.Password = _passwordHasher.HashPassword(userCreateDto.Password);
+        user.PasswordHash = _passwordHasher.HashPassword(userCreateDto.Password);
         user.CreatedAt = DateTime.UtcNow;
 
         var createdUser = await _userRepository.AddUserAsync(user);

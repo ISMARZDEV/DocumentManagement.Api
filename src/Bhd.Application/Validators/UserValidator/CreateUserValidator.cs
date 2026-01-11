@@ -9,7 +9,8 @@ public class CreateUserValidator : AbstractValidator<UserCreateDto>
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("El nombre es obligatorio");
-
+        RuleFor(x => x.UserName)
+            .NotEmpty().WithMessage("El nombre de usuario es obligatorio");
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("El email es obligatorio")
             .EmailAddress().WithMessage("Formato de email inválido")

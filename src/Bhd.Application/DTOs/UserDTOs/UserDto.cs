@@ -14,6 +14,10 @@ public class UserDto
     /// </summary>
     public string Name { get; set; } = string.Empty;
     /// <summary>
+    /// Nombre de usuario único.
+    /// </summary>
+    public string UserName { get; set; } = string.Empty;
+    /// <summary>
     /// Correo electrónico del usuario.
     /// </summary>
     public string Email { get; set; } = string.Empty;

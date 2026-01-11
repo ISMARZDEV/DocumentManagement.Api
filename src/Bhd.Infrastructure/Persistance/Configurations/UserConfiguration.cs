@@ -19,18 +19,22 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasMaxLength(100);
 
+        builder.Property(u => u.UserName)
+            .IsRequired()
+            .HasMaxLength(50);
+
         builder.Property(u => u.Email)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(150);
 
-        builder.Property(u => u.Password)
+        builder.Property(u => u.PasswordHash)
             .IsRequired()
-            .HasMaxLength(20);
+            .HasMaxLength(255);
 
         builder.Property(u => u.Role)
             .IsRequired()
-            .HasMaxLength(50)
-            .HasDefaultValue("User");
+            .HasMaxLength(20)
+            .HasDefaultValue("Admin");
 
         builder.Property(u => u.CreatedAt)
             .IsRequired()
@@ -40,5 +44,9 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.Email)
             .IsUnique()
             .HasDatabaseName("IX_Users_Email");
+
+        builder.HasIndex(u => u.UserName)
+            .IsUnique()
+            .HasDatabaseName("IX_Users_UserName");
     }
 }
