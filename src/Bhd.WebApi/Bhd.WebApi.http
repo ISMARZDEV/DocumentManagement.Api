@@ -1,6 +1,45 @@
 @Bhd.WebApi_HostAddress = http://localhost:5017
 
-GET {{Bhd.WebApi_HostAddress}}/weatherforecast/
+### ---------------------------------------
+### Health Checks
+### ---------------------------------------
+
+### Basic Health Check
+GET {{Bhd.WebApi_HostAddress}}/health
 Accept: application/json
 
-###
+### Detailed Health Check
+GET {{Bhd.WebApi_HostAddress}}/api/health
+Accept: application/json
+
+### ---------------------------------------
+### Users API
+### ---------------------------------------
+
+### 1. Register User
+POST {{Bhd.WebApi_HostAddress}}/api/User
+Content-Type: application/json
+
+{
+  "name": "Usuario Prueba Http",
+  "email": "http_test_user@example.com",
+  "password": "StrongPassword123!"
+}
+
+### 2. Login User (Usa las credenciales creadas o las de prueba)
+POST {{Bhd.WebApi_HostAddress}}/api/User/login
+Content-Type: application/json
+
+{
+  "email": "admin@prueba.com",
+  "password": "Candado6947!"
+}
+
+### 3. Get User By Id
+# Copia el 'id' y el 'token' de la respuesta del Login o Register
+@userId = REPLACE_WITH_USER_ID
+@authToken = REPLACE_WITH_TOKEN
+
+GET {{Bhd.WebApi_HostAddress}}/api/User/{{userId}}
+Authorization: Bearer {{authToken}}
+Accept: application/json
