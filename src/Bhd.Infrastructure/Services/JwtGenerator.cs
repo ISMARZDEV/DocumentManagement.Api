@@ -23,8 +23,9 @@ public class JwtGenerator : IJwtGenerator
         {
             new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
-            new Claim(ClaimTypes.Role, user.Role ?? "User"),
-            new Claim("name", user.Name)
+            new Claim(ClaimTypes.Role, user.Role ?? "Admin"),
+            new Claim("name", user.Name),
+            new Claim("username", user.UserName)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

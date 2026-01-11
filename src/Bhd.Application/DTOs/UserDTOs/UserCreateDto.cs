@@ -10,6 +10,10 @@ public class UserCreateDto
     /// </summary>
     public string Name { get; set; } = string.Empty;
     /// <summary>
+    /// Nombre de usuario deseado.
+    /// </summary>
+    public string UserName { get; set; } = string.Empty;
+    /// <summary>
     /// Correo electrónico del usuario. Debe ser único.
     /// </summary>
     public string Email { get; set; } = string.Empty;
@@ -17,4 +21,8 @@ public class UserCreateDto
     /// Contraseña del usuario.
     /// </summary>
     public string Password { get; set; } = string.Empty;
+    /// <summary>
+    /// Rol asignado al usuario. Por defecto es Admin.
+    /// </summary>
+    public string Role { get; set; } = "Admin";
 }
