@@ -1,0 +1,6 @@
+@Bhd.WebApi_HostAddress = http://localhost:5017
+
+GET {{Bhd.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
