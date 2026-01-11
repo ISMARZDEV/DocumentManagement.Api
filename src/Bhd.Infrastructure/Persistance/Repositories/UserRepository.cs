@@ -31,4 +31,9 @@ public class UserRepository : IUserRepository
         return await _context.Users.AnyAsync(u => u.Email.ToLower().Trim() == email.ToLower().Trim());
     }
 
+    public async Task<User?> GetUserByEmail(string email)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Email.ToLower().Trim() == email.ToLower().Trim());
+    }
 }

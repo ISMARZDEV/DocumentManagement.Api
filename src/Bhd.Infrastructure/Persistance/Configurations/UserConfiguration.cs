@@ -36,9 +36,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .IsRequired()
             .HasDefaultValueSql("GETUTCDATE()");
 
-        builder.Property(u => u.UpdatedAt)
-            .IsRequired(false);
-
         // Índices
         builder.HasIndex(u => u.Email)
             .IsUnique()
