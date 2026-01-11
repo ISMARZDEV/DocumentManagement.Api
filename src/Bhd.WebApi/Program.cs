@@ -1,18 +1,33 @@
+using Bhd.Infrastructure;
+using Bhd.Infrastructure.Persistance.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add services to the container
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// CORS Configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// Add architecture layers
+builder.Services.AddInfrastructure(builder.Configuration);
+
 // Health Checks
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 var rabbitMqHost = builder.Configuration["RabbitMq:Host"] ?? "localhost";
 var rabbitMqUri = $"amqp://guest:guest@{rabbitMqHost}:5672";
 
 builder.Services.AddHealthChecks()
-    .AddSqlServer(
-        connectionString: connectionString!,
+    .AddDbContextCheck<ApplicationDbContext>(
         name: "sqlserver",
         tags: new[] { "db", "sql", "sqlserver" })
     .AddRabbitMQ(
@@ -22,6 +37,27 @@ builder.Services.AddHealthChecks()
 
 var app = builder.Build();
 
+// Apply migrations automatically on startup
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        var logger = services.GetRequiredService<ILogger<Program>>();
+
+        logger.LogInformation("Applying database migrations...");
+        context.Database.Migrate();
+        logger.LogInformation("Database migrations applied successfully.");
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating the database.");
+        throw;
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -30,6 +66,9 @@ if (app.Environment.IsDevelopment())
 }
 
 // app.UseHttpsRedirection(); // Deshabilitado en Docker
+
+// Enable CORS
+app.UseCors("AllowAll");
 
 // Health Check Endpoint
 app.MapHealthChecks("/health");
