@@ -1,0 +1,72 @@
+services:
+  # ---------------------------------------
+  # SQL Server
+  # ---------------------------------------
+  bhd-db:
+    platform: linux/amd64
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: bhd-sqlserver
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Candado6947!"
+      MSSQL_SA_PASSWORD: "Candado6947!"
+      MSSQL_PID: "Developer"
+    volumes:
+      - sql_data:/var/opt/mssql
+      - ./scripts/init-db.sql:/scripts/init-db.sql
+      - ./scripts/entrypoint.sh:/scripts/entrypoint.sh
+    command: >
+      bash -c "
+      /opt/mssql/bin/sqlservr &
+      sleep 30 &&
+      /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P Candado6947! -C -i /scripts/init-db.sql &&
+      wait
+      "
+    networks:
+      - bhd-network
+
+  # ---------------------------------------
+  # RabbitMQ (con Management UI)
+  # ---------------------------------------
+  bhd-rabbitmq:
+    image: rabbitmq:3-management
+    container_name: bhd-rabbitmq
+    ports:
+      - "5672:5672"   # Protocolo AMQP
+      - "15672:15672" # Management UI (http://localhost:15672)
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+      - bhd-network
+
+  # ---------------------------------------
+  # API .NET 8
+  # ---------------------------------------
+  bhd-api:
+    image: bhd-document-management-api
+    container_name: bhd-api
+    build:
+      context: ./src
+      dockerfile: Bhd.WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=bhd-db;Database=BhdDocumentDb;User Id=sa;Password=Candado6947!;TrustServerCertificate=True;
+      - RabbitMq__Host=bhd-rabbitmq
+    ports:
+      - "5017:8080"
+      - "7008:8081"
+    networks:
+      - bhd-network
+    depends_on:
+      - bhd-db
+      - bhd-rabbitmq
+
+volumes:
+  sql_data:
+
+networks:
+  bhd-network:
+    driver: bridge
