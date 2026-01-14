@@ -10,8 +10,8 @@ namespace Bhd.Domain.Entities
         public long Size { get; set; }
         public string? FileUrl { get; set; }
         public DocumentType DocumentType { get; set; }
-        public DocumentChannel Channel { get; set; } 
-        public DocumentStatus Status { get; set; } = DocumentStatus.Received;
+        public DocumentChannel Channel { get; set; }
+        public DocumentStatus Status { get; set; } = DocumentStatus.RECEIVED;
         public string? CorrelationId { get; set; } 
         public Guid? CustomerId { get; set; }
         public Guid UserId { get; set; }

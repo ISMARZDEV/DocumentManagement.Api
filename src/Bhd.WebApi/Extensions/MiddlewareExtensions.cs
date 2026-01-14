@@ -32,7 +32,7 @@ public static class MiddlewareExtensions
         app.MapHealthChecks("/health");
 
         // Detailed Health Check
-        app.MapGet("/api/health", async (Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService healthCheckService) =>
+        app.MapGet("api/bhd/mgmt/1/health", async (Microsoft.Extensions.Diagnostics.HealthChecks.HealthCheckService healthCheckService) =>
         {
             var report = await healthCheckService.CheckHealthAsync();
             return Results.Ok(new
@@ -49,6 +49,9 @@ public static class MiddlewareExtensions
         })
         .WithName("GetHealth")
         .WithTags("Health")
+        .WithSummary("Obtener estado de salud detallado.")
+        .WithDescription($"Proporciona una revisión de salud detallada de la aplicación 'bhd-document-management-api' (Container bhd-sqlserver, Container bhd-api) y sus dependencias.")
+        .Produces(StatusCodes.Status200OK)
         .WithOpenApi();
 
         return app;

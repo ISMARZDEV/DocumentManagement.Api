@@ -28,21 +28,6 @@ services:
       - bhd-network
 
   # ---------------------------------------
-  # RabbitMQ (con Management UI)
-  # ---------------------------------------
-  bhd-rabbitmq:
-    image: rabbitmq:3-management
-    container_name: bhd-rabbitmq
-    ports:
-      - "5672:5672"   # Protocolo AMQP
-      - "15672:15672" # Management UI (http://localhost:15672)
-    environment:
-      - RABBITMQ_DEFAULT_USER=guest
-      - RABBITMQ_DEFAULT_PASS=guest
-    networks:
-      - bhd-network
-
-  # ---------------------------------------
   # API .NET 8
   # ---------------------------------------
   bhd-api:
@@ -54,7 +39,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=bhd-db;Database=BhdDocumentDb;User Id=sa;Password=Candado6947!;TrustServerCertificate=True;
-      - RabbitMq__Host=bhd-rabbitmq
     ports:
       - "5017:8080"
       - "7008:8081"
@@ -62,7 +46,6 @@ services:
       - bhd-network
     depends_on:
       - bhd-db
-      - bhd-rabbitmq
 
 volumes:
   sql_data:

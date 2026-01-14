@@ -1,6 +1,6 @@
 # Document Management API - Technical Evaluation
 
-![NET8](https://img.shields.io/badge/.NET-8.0-purple) ![Docker](https://img.shields.io/badge/Docker-Ready-blue) ![RabbitMQ](https://img.shields.io/badge/RabbitMQ-Messaging-orange) ![SQLServer](https://img.shields.io/badge/SQL_Server-2022-red)
+![NET8](https://img.shields.io/badge/.NET-8.0-purple) ![Docker](https://img.shields.io/badge/Docker-Ready-blue) ![SQLServer](https://img.shields.io/badge/SQL_Server-2022-red)
 
 Sistema robusto de gestión de carga y búsqueda de documentos. Diseñado para proporcionar capacidades de carga asíncrona, almacenamiento de metadatos y orquestación resiliente mediante mensajería.
 

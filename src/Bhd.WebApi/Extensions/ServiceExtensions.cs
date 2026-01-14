@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.OpenApi.Models;
+using System.Text.Json.Serialization;
 
 namespace Bhd.WebApi.Extensions;
 
@@ -7,14 +8,18 @@ public static class ServiceExtensions
 {
     public static IServiceCollection AddPresentationServices(this IServiceCollection services)
     {
-        services.AddControllers();
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
         services.AddFluentValidationAutoValidation();
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
             c.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Users API",
+                Title = "Document Management API - Banco BHD",
                 Version = "v1",
                 Description = @"Esta API proporciona a Banco BHD una capacidad interna para la carga y gestión de activos/documentos utilizada por múltiples sistemas internos. Actúa como un proxy/gateway que gestiona el proceso de carga de documentos, recibiendo los archivos y orquestando su envío de manera asíncrona hacia un publicador o servicio de almacenamiento interno.
 
@@ -28,7 +33,6 @@ Para probar los endpoints protegidos, puede utilizar las siguientes credenciales
 - **Password:** Candado6947!"
             });
 
-            // Configuración de JWT para Swagger
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "JWT Authorization header usando el esquema Bearer. \r\n\r\n Ingrese su token en el campo de texto (el prefijo 'Bearer' se agregar automáticamente).",
@@ -54,12 +58,10 @@ Para probar los endpoints protegidos, puede utilizar las siguientes credenciales
                 }
             });
 
-            // Comentarios XML
             var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
             var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
             c.IncludeXmlComments(xmlPath);
 
-            // Comentarios XML de Application (DTOs)
             var applicationXmlFile = "Bhd.Application.xml";
             var applicationXmlPath = Path.Combine(AppContext.BaseDirectory, applicationXmlFile);
             if (File.Exists(applicationXmlPath))

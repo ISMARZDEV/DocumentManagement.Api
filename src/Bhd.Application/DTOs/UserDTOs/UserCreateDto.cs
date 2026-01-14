@@ -1,8 +1,5 @@
 namespace Bhd.Application.DTOs.UserDTOs;
 
-/// <summary>
-/// DTO para la creación de un nuevo usuario.
-/// </summary>
 public class UserCreateDto
 {
     /// <summary>
