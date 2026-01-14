@@ -1,8 +1,5 @@
 namespace Bhd.Application.DTOs.UserDTOs;
 
-/// <summary>
-/// DTO que representa la información pública de un usuario.
-/// </summary>
 public class UserDto
 {
     /// <summary>

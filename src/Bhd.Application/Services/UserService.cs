@@ -14,7 +14,10 @@ public class UserService : IUserService
     private readonly IJwtGenerator _jwtGenerator;
     private readonly IMapper _mapper;
 
-    public UserService(IUserRepository userRepository, IPasswordHasher passwordHasher, IJwtGenerator jwtGenerator, IMapper mapper)
+    public UserService(IUserRepository userRepository, 
+                        IPasswordHasher passwordHasher, 
+                        IJwtGenerator jwtGenerator, 
+                        IMapper mapper)
     {
         _userRepository = userRepository;
         _passwordHasher = passwordHasher;
@@ -22,8 +25,13 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public async Task<UserDto?> GetUserByIdAsync(Guid userId)
+    public async Task<UserDto?> GetUserByIdAsync(Guid userId, Guid? currentUserId = null, bool isAdmin = false)
     {
+        if (currentUserId.HasValue && !isAdmin && currentUserId.Value != userId)
+        {
+            throw new ForbiddenException("No tienes permiso para acceder a este perfil.");
+        }
+
         var user = await _userRepository.GetUserByIdAsync(userId);
 
         if (user == null)
@@ -33,6 +41,7 @@ public class UserService : IUserService
 
         return _mapper.Map<UserDto>(user);
     }
+
     public async Task<UserResponseDto> LoginAsync(UserLoginDto userLoginDto)
     {
         var user = await _userRepository.GetUserByEmail(userLoginDto.Email);

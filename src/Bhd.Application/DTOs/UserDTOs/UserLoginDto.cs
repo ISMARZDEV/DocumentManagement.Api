@@ -1,8 +1,5 @@
 namespace Bhd.Application.DTOs.UserDTOs;
 
-/// <summary>
-/// DTO para la autenticación de usuarios.
-/// </summary>
 public class UserLoginDto
 {
     /// <summary>

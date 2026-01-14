@@ -1,8 +1,5 @@
 namespace Bhd.Application.DTOs.UserDTOs;
 
-/// <summary>
-/// DTO de respuesta tras una operación de creación o login exitosa.
-/// </summary>
 public class UserResponseDto
 {
     /// <summary>
