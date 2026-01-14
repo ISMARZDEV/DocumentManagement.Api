@@ -3,6 +3,7 @@ using Bhd.Application.Interfaces;
 using Bhd.Domain.Interfaces;
 using Bhd.Infrastructure.Identity;
 using Bhd.Infrastructure.Persistance.Contexts;
+using Bhd.Infrastructure.Persistance.DataSeeders;
 using Bhd.Infrastructure.Persistance.Repositories;
 using Bhd.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +25,7 @@ public static class DependencyInjection
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtGenerator, JwtGenerator>();
+        services.AddScoped<DataSeeder>();
 
         return services;
     }
@@ -41,6 +43,7 @@ public static class DependencyInjection
     private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IDocumentRepository, DocumentRepository>();
 
         return services;
     }
@@ -68,17 +71,10 @@ public static class DependencyInjection
 
     private static IServiceCollection AddHealthChecksConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
-        var rabbitMqHost = configuration["RabbitMq:Host"] ?? "localhost";
-        var rabbitMqUri = $"amqp://guest:guest@{rabbitMqHost}:5672";
-
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>(
                 name: "sqlserver",
-                tags: new[] { "db", "sql", "sqlserver" })
-            .AddRabbitMQ(
-                rabbitConnectionString: rabbitMqUri,
-                name: "rabbitmq",
-                tags: new[] { "messaging", "rabbitmq" });
+                tags: new[] { "db", "sql", "sqlserver" });
 
         return services;
     }

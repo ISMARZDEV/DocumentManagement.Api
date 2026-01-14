@@ -13,7 +13,7 @@ GET {{Bhd.WebApi_HostAddress}}/api/health
 Accept: application/json
 
 ### ---------------------------------------
-### Users API
+### Document Management API
 ### ---------------------------------------
 
 ### 1. Register User
