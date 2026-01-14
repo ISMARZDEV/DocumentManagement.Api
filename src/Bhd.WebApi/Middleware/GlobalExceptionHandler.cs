@@ -33,7 +33,7 @@ public class GlobalExceptionHandler
         var response = context.Response;
 
         var message = exception.Message;
-        
+
         switch (exception)
         {
             case UnauthorizedException:
@@ -43,23 +43,20 @@ public class GlobalExceptionHandler
             case ForbiddenException:
                 response.StatusCode = (int)HttpStatusCode.Forbidden;
                 break;
-                
+
             case BadRequestException:
                 response.StatusCode = (int)HttpStatusCode.BadRequest;
                 break;
-                
+
             case KeyNotFoundException:
-                // KeyNotFoundException es de System.Collections.Generic
                 response.StatusCode = (int)HttpStatusCode.NotFound;
                 break;
 
             case AppException:
-                // Otras excepciones de aplicación genéricas
                 response.StatusCode = (int)HttpStatusCode.BadRequest;
                 break;
 
             default:
-                // Errores no controlados -> 500
                 _logger.LogError(exception, "Error no controlado");
                 response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 message = "Ha ocurrido un error interno en el servidor.";
