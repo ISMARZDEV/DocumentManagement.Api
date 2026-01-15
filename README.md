@@ -9,15 +9,24 @@ API REST de gestión de carga y búsqueda de documentos. Diseñada para proporci
 ## 📄 Documentación - Arquitectura de solución
 
 <div align="center">
-  <a href="TU_ENLACE_AQUI">
-  <img src="assets/Portada-documento.jpg" alt="Endpoint Users" width="800">
+  <a 
+    href="https://drive.google.com/file/d/1tNEO1hr2ILYniqLVTcGOZO7lE9t7kod6/view?usp=sharing"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img src="assets/Portada-documento.jpg" alt="Documentación de Arquitectura" width="800">
+  </a>
   <p><i>Figura 1: Documentación - Arquitectura de solución</i></p>
 </div>
 
 <div align="center">
-
-  [Ver documentación de arquitectura completo](./docs/architecture.md) (Acceder mediante este enlace)
-
+  <a 
+    href="https://drive.google.com/file/d/1tNEO1hr2ILYniqLVTcGOZO7lE9t7kod6/view?usp=sharing" 
+    target="_blank" 
+    rel="noopener noreferrer"
+  >
+    Ver documentación de arquitectura completa
+  </a>
 </div>
 
 
@@ -388,7 +397,7 @@ Ambas carpetas están en la raíz del repositorio: [DocumentStorage](DocumentSto
 
 <div align="center">
   <a href="/assets/Project-Backlogs-Items.png" target="_blank">
-<img width="3024" height="1964" alt="Image" src="https://github.com/user-attachments/assets/b58af903-2075-4342-a8ec-7a4a2c0de2dc" />
+<img width="3024" alt="Image" src="/assets/Project-Backlogs-Items.png" />
 
   </a>
   <p><strong>📊 Gestión del Proyecto en GitHub Project</strong></p>
