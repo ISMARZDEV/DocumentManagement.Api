@@ -10,8 +10,7 @@ API REST de gestión de carga y búsqueda de documentos. Diseñada para proporci
 
 <div align="center">
   <a href="TU_ENLACE_AQUI">
-    <img width="800" height="2200" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/91badbb3-64fc-4172-90e3-17d086c48efa" />
-  </a>
+  <img src="assets/Portada-documento.jpg" alt="Endpoint Users" width="800">
   <p><i>Figura 1: Documentación - Arquitectura de solución</i></p>
 </div>
 
@@ -41,7 +40,7 @@ API REST de gestión de carga y búsqueda de documentos. Diseñada para proporci
 El desarrollo de esta API REST sigue estrictamente los principios de **Clean Architecture** (Arquitectura Limpia), separando las responsabilidades en capas concéntricas para garantizar la independencia de frameworks, UI y bases de datos.
 
 <div align="center">
-  <img width="600" height="600" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/61813877-5182-42a2-ab9f-f553ab376b8c" />
+  <img src="assets/Clean-Architecture.png" alt="Endpoint Users" width="600">
   <p><i>Figura 2: Diagrama de la arquitectura del sistema</i></p>
 </div>
 
@@ -64,7 +63,7 @@ El desarrollo de esta API REST sigue estrictamente los principios de **Clean Arc
 Diagrama detallado que muestra la arquitectura integral de la solución con todos los servicios, tecnologías y componentes involucrados en el flujo de User y Document. Incluye integraciones con servicios externos, patrones de comunicación y componentes clave.
 
 <div align="center">
-  <img width="4812" height="3096" alt="Arquitectura de Solución Completa - Stack Tecnológico" src="https://github.com/user-attachments/assets/39af09dd-fea3-44b1-abde-aed7da5f26d1" />
+  <img src="assets/Imagen-Arquitectura-Base.png" alt="Endpoint Users" width="4812">
   <p><i>Figura 3: Arquitectura de Solución Completa - Stack Tecnológico y Servicios</i></p>
 </div>
 
@@ -79,7 +78,7 @@ El modelo de entidades está basado en herencia con **BaseEntity** como clase ab
 - **BaseEntity**: Clase abstracta que proporciona propiedades comunes (`Id`, `CreatedAt`)
 
 <div align="center">
-  <img width="795" height="455" alt="Diagrama de Clases - User y Document" src="https://github.com/user-attachments/assets/6170a1a4-aa03-4004-87ac-4d5bb3360978" />
+<img src="assets/Diagrama-de-clases.png" alt="Endpoint Users" width="795">
   <p><i>Figura 4: Diagrama de Clases - Entidades Domain (User y Document)</i></p>
 </div>
 
@@ -95,7 +94,7 @@ Representación del modelo de base de datos relacional implementado en SQL Serve
 - **Relación**: Foreign Key `UserId` establece la relación 1 a Muchos entre Users y Documents
 
 <div align="center">
-  <img width="598" height="480" alt="Diagrama Entidad-Relación (ER)" src="https://github.com/user-attachments/assets/8dbb1c2c-0589-4f3f-9965-0f31d087a08f" />
+<img src="assets/Diagrama-de-base-de-datos.png" alt="Endpoint Users" width="598">
   <p><i>Figura 5: Diagrama Entidad-Relación (ER) - Modelo Relacional SQL Server</i></p>
 </div>
 
@@ -257,7 +256,7 @@ Se utilizó Hangfire para la Carga Asíncrona (Core Asíncrono) y para encolar t
 Se utilizó Hangfire para la Carga Asíncrona (Core Asíncrono) y para encolar tareas de procesamiento (procesado y almacenamiento de documentos) desde la API.
 
 <div align="center">
- <img width="511" height="369" alt="Dashboard Hangfire - Monitorizar Jobs" src="https://github.com/user-attachments/assets/a0a4a0ac-4ccd-443d-9e67-e96c386fc82f" />
+<img src="assets/Dashboard-hangfire.png" alt="Endpoint Users" width="511">
   <p><i>Figura 6: Dashboard Hangfire (monitorizar jobs)</i></p>
 </div>
 
@@ -300,13 +299,13 @@ Usuario final. Solo puede cargar sus propios documentos y ver sus documentos.
 - **Nota:** Copiar y pegar token en la varible Globals (bearerToken)
 
 <div align="center">
-<img width="1000" height="487" alt="Image" src="https://github.com/user-attachments/assets/c4de5409-f610-42ee-89a0-8ddb77c0b0c3" />
+<img src="assets/1-Authenticación- Autorización.png" alt="Endpoint Users" width="1000">
 </div>
 
 2. **Cliente envía archivo** — POST con archivo multipart/form-data y token de seguridad JWT válido.
 
 <div align="center">
-  <img width="931" height="627" alt="Image" src="https://github.com/user-attachments/assets/6ceb05ca-1d68-429e-9c2a-355482549334" />
+<img src="assets/2-Usuario-envía archivo.png" alt="Endpoint Users" width="931">
 </div>
 
 3. **API valida y codifica** — El servidor valida las credenciales y convierte el archivo a Base64.
@@ -316,7 +315,7 @@ Usuario final. Solo puede cargar sus propios documentos y ver sus documentos.
 5. **Handler guarda en staging** — El archivo se almacena temporalmente en `/temp`.
 
 <div align="center">
-<img width="518" height="384" alt="Image" src="https://github.com/user-attachments/assets/c891ac27-b250-4936-84bf-66c9280105a9" />
+  <img src="assets/5-Handler-guarda-staging.png" alt="Endpoint Users" width="518">
 </div>
 
 6. **Handler encola job** — Hangfire crea un job en la tabla `HangfireJob` de SQL Server.
@@ -325,23 +324,27 @@ Usuario final. Solo puede cargar sus propios documentos y ver sus documentos.
 7. **API retorna 202 Accepted** — El cliente recibe inmediatamente `documentId` y `jobId`.
 
 <div align="center">
-<img width="653" height="186" alt="Image" src="https://github.com/user-attachments/assets/b76b9746-c9b8-4b6a-b927-e21371c146cc"/>
+<img src="assets/7-API-retorna-202-Accepted.png" alt="Endpoint Users" width="643">
 </div>
 
 8. **Hangfire Worker procesa** — Un servicio en background obtiene el job de la cola de SQL Server.
 
 <div align="center">
-<img width="1768" height="1022" alt="Image" src="https://github.com/user-attachments/assets/a5a6df5c-183c-432b-9a23-9cb738284c4b" />
+<img src="assets/8-Hangfire-Worker-procesa.png" alt="Endpoint Users" width="1768">
 </div>
 
 9. **Worker ejecuta DocumentUploadJob** — Mueve el archivo de `/temp` a `DocumentStorage/{year}/{month}/` y actualiza el estado a `SENT`.
 
 <div align="center">
-<img width="1127" height="534" alt="Image" src="https://github.com/user-attachments/assets/20cb72d1-c63b-4341-a171-e87192372178" />
+<img src="assets/9-Worker-ejecuta-DocumentUploadJob.png" alt="Endpoint Users" width="1127">
+</div>
+
+<div>
+
 </div>
 
 <div align="center">
-  <img width="530" height="362" alt="Image" src="https://github.com/user-attachments/assets/74bdbef3-8294-4db3-9f68-b0a5eb7f088e" />
+<img src="assets/9-DocumentStorage.png" alt="Endpoint Users" width="530">
 </div>
 
 
@@ -357,7 +360,7 @@ Usuario final. Solo puede cargar sus propios documentos y ver sus documentos.
 Ambas carpetas están en la raíz del repositorio: [DocumentStorage](DocumentStorage) y [temp](temp).
 
 <div align="center">
- <img width="511" height="369" alt="Image" src="https://github.com/user-attachments/assets/e4f841a5-cea9-4f75-bff4-a66033442a2d" />
+<img src="assets/9-Carpeta-raíz.png" alt="Endpoint Users" width="511">
 </div>
 
 ---
@@ -384,7 +387,7 @@ Ambas carpetas están en la raíz del repositorio: [DocumentStorage](DocumentSto
 **Backlog Items, Test Cases, Epics** del proyecto:
 
 <div align="center">
-  <a href="https://github.com/users/ISMARZDEV/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Sub-issues+progress%22%2C%22Labels%22%2C%22Status%22%2C%22Linked+pull+requests%22%2C%22Parent+issue%22%2C%22Repository%22%2C%22Assignees%22%5D" target="_blank">
+  <a href="/assets/Project-Backlogs-Items.png" target="_blank">
 <img width="3024" height="1964" alt="Image" src="https://github.com/user-attachments/assets/b58af903-2075-4342-a8ec-7a4a2c0de2dc" />
 
   </a>
