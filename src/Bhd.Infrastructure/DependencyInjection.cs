@@ -1,11 +1,15 @@
 using System.Text;
 using Bhd.Application.Interfaces;
 using Bhd.Domain.Interfaces;
+using Bhd.Infrastructure.Handlers.DocumentHandlers;
 using Bhd.Infrastructure.Identity;
+using Bhd.Infrastructure.Jobs;
 using Bhd.Infrastructure.Persistance.Contexts;
 using Bhd.Infrastructure.Persistance.DataSeeders;
 using Bhd.Infrastructure.Persistance.Repositories;
 using Bhd.Infrastructure.Services;
+using Hangfire;
+using Hangfire.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -22,10 +26,17 @@ public static class DependencyInjection
         services.AddRepositories();
         services.AddJwtAuthentication(configuration);
         services.AddHealthChecksConfiguration(configuration);
+        services.AddHangfireConfiguration(configuration);
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtGenerator, JwtGenerator>();
         services.AddScoped<DataSeeder>();
+
+        // Registrar Handlers de Commands
+        services.AddScoped<CreateDocumentCommandHandler>();
+
+        // Registrar Jobs de Hangfire
+        services.AddScoped<DocumentUploadJob>();
 
         return services;
     }
@@ -75,6 +86,33 @@ public static class DependencyInjection
             .AddDbContextCheck<ApplicationDbContext>(
                 name: "sqlserver",
                 tags: new[] { "db", "sql", "sqlserver" });
+
+        return services;
+    }
+
+    private static IServiceCollection AddHangfireConfiguration(this IServiceCollection services, IConfiguration configuration)
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        // Configurar Hangfire con SQL Server
+        services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(connectionString, new SqlServerStorageOptions
+            {
+                CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                QueuePollInterval = TimeSpan.Zero,
+                UseRecommendedIsolationLevel = true,
+                DisableGlobalLocks = true
+            }));
+
+        // Agregar el servidor de Hangfire
+        services.AddHangfireServer(options =>
+        {
+            options.WorkerCount = 5;
+        });
 
         return services;
     }

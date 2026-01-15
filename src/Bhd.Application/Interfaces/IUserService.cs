@@ -7,4 +7,5 @@ public interface IUserService
     Task<UserDto?> GetUserByIdAsync(Guid userId, Guid? currentUserId = null, bool isAdmin = false);
     Task<UserResponseDto> AddUserAsync(UserCreateDto userCreateDto);
     Task<UserResponseDto> LoginAsync(UserLoginDto userLoginDto);
+    Task<(List<UserDto> Users, int TotalCount)> GetAllUsersAsync(string? searchName, int page, int pageSize, string userRole);
 }

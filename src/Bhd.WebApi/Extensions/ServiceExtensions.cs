@@ -23,14 +23,8 @@ public static class ServiceExtensions
                 Version = "v1",
                 Description = @"Esta API proporciona a Banco BHD una capacidad interna para la carga y gestión de activos/documentos utilizada por múltiples sistemas internos. Actúa como un proxy/gateway que gestiona el proceso de carga de documentos, recibiendo los archivos y orquestando su envío de manera asíncrona hacia un publicador o servicio de almacenamiento interno.
 
-Asimismo, permite a usuarios y sistemas internos consultar los documentos cargados a partir de metadatos persistidos, los cuales se conservan para garantizar la trazabilidad y facilitar los procesos de auditoría.
+Asimismo, permite a usuarios y sistemas internos consultar los documentos cargados a partir de metadatos persistidos, los cuales se conservan para garantizar la trazabilidad y facilitar los procesos de auditoría."
 
-### Credenciales de Prueba
-                
-Para probar los endpoints protegidos, puede utilizar las siguientes credenciales en el endpoint `/api/User/login`:
-
-- **Email:** admin@prueba.com
-- **Password:** Candado6947!"
             });
 
             c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

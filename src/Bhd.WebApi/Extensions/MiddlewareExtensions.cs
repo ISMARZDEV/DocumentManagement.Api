@@ -49,8 +49,8 @@ public static class MiddlewareExtensions
         })
         .WithName("GetHealth")
         .WithTags("Health")
-        .WithSummary("Obtener estado de salud detallado.")
-        .WithDescription($"Proporciona una revisión de salud detallada de la aplicación 'bhd-document-management-api' (Container bhd-sqlserver, Container bhd-api) y sus dependencias.")
+        .WithSummary("Obtener estado de salud detallado")
+        .WithDescription($"Proporciona una revisión de salud detallada de la aplicación 'bhd-document-management-api' (Container bhd-sqlserver, Container bhd-api) y sus dependencias")
         .Produces(StatusCodes.Status200OK)
         .WithOpenApi();
 
