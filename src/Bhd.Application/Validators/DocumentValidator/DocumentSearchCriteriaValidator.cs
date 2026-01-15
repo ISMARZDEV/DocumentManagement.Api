@@ -23,6 +23,11 @@ namespace Bhd.Application.Validators.DocumentValidator
                 throw new ArgumentException(
                     $"El tamaño de página no puede exceder {PaginationConstants.MAX_PAGE_SIZE}", 
                     nameof(criteria.PageSize));
+
+            if (!System.Enum.IsDefined(typeof(Domain.Enums.DocumentSortBy), criteria.SortBy))
+                throw new ArgumentException(
+                    "El campo sortBy es obligatorio.",
+                    nameof(criteria.SortBy));
         }
     }
 }
