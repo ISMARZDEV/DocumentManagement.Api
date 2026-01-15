@@ -1,0 +1,2235 @@
+{
+	"info": {
+		"_postman_id": "0b853c41-9256-4436-9a30-7b4c55bf7f95",
+		"name": "Document Management API - Banco BHD",
+		"description": "Esta API proporciona a Banco BHD una capacidad interna para la carga y gestión de activos/documentos utilizada por múltiples sistemas internos. Actúa como un proxy/gateway que gestiona el proceso de carga de documentos, recibiendo los archivos y orquestando su envío de manera asíncrona hacia un publicador o servicio de almacenamiento interno.\n\nAsimismo, permite a usuarios y sistemas internos consultar los documentos cargados a partir de metadatos persistidos, los cuales se conservan para garantizar la trazabilidad y facilitar los procesos de auditoría.\n\nPara acceder, utilizar uno de los siguientes usuarios con los siguientes roles:\n\n<img src=\"https://content.pstmn.io/ca10f2c8-b0f6-4e2d-b162-3ffd986c72ad/aW1hZ2UucG5n\" width=\"2780\" height=\"974\">\n\n**  \n1\\. Admin**  \nAcceso total. Puede cargar documentos para cualquier cliente, crear nuevos usuarios, ver la lista de usuarios y ver la lista completa de documentos cargados.\n\n``` json\n{\n  \"email\": \"admin@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**2\\. Operador**  \nAcceso limitado. Puede cargar documentos de clientes y ver el listado de clientes.\n\n``` json\n{\n  \"email\": \"operador@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**3\\. Cliente**  \nUsuario final. Solo puede cargar sus propios documentos y ver sus documentos.\n\n``` json\n{\n  \"email\": \"cliente@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30897284"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "bhd",
+					"item": [
+						{
+							"name": "mgmt",
+							"item": [
+								{
+									"name": "1",
+									"item": [
+										{
+											"name": "documents",
+											"item": [
+												{
+													"name": "actions",
+													"item": [
+														{
+															"name": "upload",
+															"item": [
+																{
+																	"name": "Carga asincrona de un documento se guarda en staging, se persiste en BD y se encola para procesamiento.",
+																	"request": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "multipart/form-data"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "formdata",
+																			"formdata": [
+																				{
+																					"key": "File",
+																					"description": "Archivo a cargar",
+																					"type": "file",
+																					"src": "postman-cloud:///1f0f1d4c-fe75-4350-b4ca-c71aa2cfa662"
+																				},
+																				{
+																					"key": "DocumentType",
+																					"value": "SUPPORTING_DOCUMENT",
+																					"description": "KYC, CONTRACT, FORM, SUPPORTING_DOCUMENT, OTHER",
+																					"type": "text"
+																				},
+																				{
+																					"key": "Channel",
+																					"value": "DIGITAL",
+																					"description": "DIGITAL, BACKOFFICE, API_INTEGRATION",
+																					"type": "text"
+																				},
+																				{
+																					"key": "CustomerId",
+																					"value": "550e8400-e29b-41d4-a716-446655440011",
+																					"description": "ID del cliente (obligatorio para Operadores/Admins, opcional para Clientes)",
+																					"type": "text"
+																				},
+																				{
+																					"key": "CorrelationId",
+																					"value": "",
+																					"description": "ID de correlación para trazabilidad",
+																					"type": "text"
+																				}
+																			]
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents/actions/upload",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"api",
+																				"bhd",
+																				"mgmt",
+																				"1",
+																				"documents",
+																				"actions",
+																				"upload"
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Documento aceptado y encolado para procesamiento",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "multipart/form-data"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "formdata",
+																					"formdata": [
+																						{
+																							"key": "File",
+																							"description": "Archivo a cargar",
+																							"type": "file",
+																							"src": []
+																						},
+																						{
+																							"key": "DocumentType",
+																							"value": "SUPPORTING_DOCUMENT",
+																							"type": "text"
+																						},
+																						{
+																							"key": "Channel",
+																							"value": "DIGITAL",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CustomerId",
+																							"value": "70974892-f923-768b-236b-f3701746df16",
+																							"description": "ID del cliente (obligatorio para Operadores/Admins, opcional para Clientes)",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CorrelationId",
+																							"value": "string",
+																							"description": "ID de correlación para trazabilidad",
+																							"type": "text"
+																						}
+																					]
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents/actions/upload",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"documents",
+																						"actions",
+																						"upload"
+																					]
+																				}
+																			},
+																			"status": "Accepted",
+																			"code": 202,
+																			"_postman_previewlanguage": "text",
+																			"header": [],
+																			"cookie": [],
+																			"body": ""
+																		},
+																		{
+																			"name": "Datos de entrada inválidos",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "multipart/form-data"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "formdata",
+																					"formdata": [
+																						{
+																							"key": "File",
+																							"description": "Archivo a cargar",
+																							"type": "file",
+																							"src": []
+																						},
+																						{
+																							"key": "DocumentType",
+																							"value": "SUPPORTING_DOCUMENT",
+																							"type": "text"
+																						},
+																						{
+																							"key": "Channel",
+																							"value": "DIGITAL",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CustomerId",
+																							"value": "70974892-f923-768b-236b-f3701746df16",
+																							"description": "ID del cliente (obligatorio para Operadores/Admins, opcional para Clientes)",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CorrelationId",
+																							"value": "string",
+																							"description": "ID de correlación para trazabilidad",
+																							"type": "text"
+																						}
+																					]
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents/actions/upload",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"documents",
+																						"actions",
+																						"upload"
+																					]
+																				}
+																			},
+																			"status": "Bad Request",
+																			"code": 400,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		},
+																		{
+																			"name": "No autorizado",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "multipart/form-data"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "formdata",
+																					"formdata": [
+																						{
+																							"key": "File",
+																							"description": "Archivo a cargar",
+																							"type": "file",
+																							"src": []
+																						},
+																						{
+																							"key": "DocumentType",
+																							"value": "SUPPORTING_DOCUMENT",
+																							"type": "text"
+																						},
+																						{
+																							"key": "Channel",
+																							"value": "DIGITAL",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CustomerId",
+																							"value": "70974892-f923-768b-236b-f3701746df16",
+																							"description": "ID del cliente (obligatorio para Operadores/Admins, opcional para Clientes)",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CorrelationId",
+																							"value": "string",
+																							"description": "ID de correlación para trazabilidad",
+																							"type": "text"
+																						}
+																					]
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents/actions/upload",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"documents",
+																						"actions",
+																						"upload"
+																					]
+																				}
+																			},
+																			"status": "Unauthorized",
+																			"code": 401,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		},
+																		{
+																			"name": "Error interno del servidor",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "multipart/form-data"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "formdata",
+																					"formdata": [
+																						{
+																							"key": "File",
+																							"description": "Archivo a cargar",
+																							"type": "file",
+																							"src": []
+																						},
+																						{
+																							"key": "DocumentType",
+																							"value": "SUPPORTING_DOCUMENT",
+																							"type": "text"
+																						},
+																						{
+																							"key": "Channel",
+																							"value": "DIGITAL",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CustomerId",
+																							"value": "70974892-f923-768b-236b-f3701746df16",
+																							"description": "ID del cliente (obligatorio para Operadores/Admins, opcional para Clientes)",
+																							"type": "text"
+																						},
+																						{
+																							"key": "CorrelationId",
+																							"value": "string",
+																							"description": "ID de correlación para trazabilidad",
+																							"type": "text"
+																						}
+																					]
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents/actions/upload",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"documents",
+																						"actions",
+																						"upload"
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [],
+																			"cookie": [],
+																			"body": ""
+																		}
+																	]
+																}
+															],
+															"description": "### POST /api/bhd/mgmt/1/documents/actions/upload\n\nSe utilizó Hangfire para la Carga Asíncrona (Core Asíncrono) y para encolar tareas de procesamiento (procesado y almacenamiento de documentos) desde la API.\n\n<img src=\"https://content.pstmn.io/a36d8da7-3c17-4792-975c-857a0f8ab5ff/aW1hZ2UucG5n\" alt=\"Figura%203:%20Dashboard%20Hangfire%20(monitorizar%20jobs)\" width=\"2034\" height=\"1306\">\n\n1. **Authenticación y Autorización** — POST Login para acceder mediante uno de los siguientes usuarios:\n    \n\n**1.1 Admin**  \nAcceso total. Puede cargar documentos para cualquier cliente, crear nuevos usuarios, ver la lista de usuarios y ver la lista completa de documentos cargados.\n\n``` json\n{\n  \"email\": \"admin@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**1.2 Operador**  \nAcceso limitado. Puede cargar documentos de clientes y ver el listado de clientes.\n\n``` json\n{\n  \"email\": \"operador@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**1.3 Cliente**  \nUsuario final. Solo puede cargar sus propios documentos y ver sus documentos.\n\n``` json\n{\n  \"email\": \"cliente@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n- **Nota:** Copiar y pegar token en la varible Globals (bearerToken)\n    \n\n<img src=\"https://content.pstmn.io/c60fb044-3831-49c1-b6de-93fe3a358669/aW1hZ2UucG5n\" width=\"2780\" height=\"974\">\n\n**2\\. Cliente envía archivo** — POST con archivo multipart/form-data y token de seguridad JWT válido.\n\n<img src=\"https://content.pstmn.io/6df937b8-2a8f-4a03-a8c3-6548bbc56992/aW1hZ2UucG5n\" width=\"1862\" height=\"1254\">\n\n**3\\. API valida y codifica** — El servidor valida las credenciales y convierte el archivo a Base64.\n\n**4\\. Handler crea Document en BD** — Se persiste el documento en SQL Server con estado `RECEIVED`.\n\n5\\. **Handler guarda en staging** — El archivo se almacena temporalmente en `/temp`.\n\n<img src=\"https://content.pstmn.io/d60f02cf-9d0f-459a-a3a5-2ca7ee3030bc/aW1hZ2UucG5n\" width=\"1036\" height=\"768\">\n\n6\\. **Handler encola job** — Hangfire crea un job en la tabla `HangfireJob` de SQL Server.\n\n7\\. **API retorna 202 Accepted** — El cliente recibe inmediatamente `documentId` y `jobId`.\n\n<img src=\"https://content.pstmn.io/b198ad7a-8856-4c7b-83a4-905390532288/aW1hZ2UucG5n\" width=\"1306\" height=\"372\">\n\n8\\. **Hangfire Worker procesa** — Un servicio en background obtiene el job de la cola de SQL Server.\n\n<img src=\"https://content.pstmn.io/5601e4c9-eb94-477e-87e0-4ca4be984a9d/aW1hZ2UucG5n\" width=\"1768\" height=\"1022\">\n\n9\\. **Worker ejecuta DocumentUploadJob** — Mueve el archivo de `/temp` a `DocumentStorage/{year}/{month}/` y actualiza el estado a `SENT`.\n\n<img src=\"https://content.pstmn.io/279ba5c8-8458-4e25-9a88-095bb09d00ed/aW1hZ2UucG5n\" width=\"2254\" height=\"1068\">\n\n<img src=\"https://content.pstmn.io/ee16aff4-d00d-4729-b785-93dd8959cb95/aW1hZ2UucG5n\" width=\"1060\" height=\"724\">\n\n10\\. **Reintentos (si falla)** — Si hay error, reintenta 5 veces con delays de **1 min, 2 min, 3 min, 5 min y 10 min**. Si agota reintentos, actualiza el estado a `FAILED`."
+														}
+													]
+												},
+												{
+													"name": "Obtiene una lista paginada de documentos con filtros de busqueda y ordenamiento.",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?documentType=OTHER&sortBy=FILENAME",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"bhd",
+																"mgmt",
+																"1",
+																"documents"
+															],
+															"query": [
+																{
+																	"key": "userId",
+																	"value": "550e8400-e29b-41d4-a716-446655440011",
+																	"description": "ID del usuario (filtro de seguridad)",
+																	"disabled": true
+																},
+																{
+																	"key": "customerId",
+																	"value": "550e8400-e29b-41d4-a716-446655440010",
+																	"description": "ID del cliente",
+																	"disabled": true
+																},
+																{
+																	"key": "filename",
+																	"value": "string",
+																	"description": "Nombre del archivo a buscar",
+																	"disabled": true
+																},
+																{
+																	"key": "contentType",
+																	"value": "string",
+																	"description": "Tipo de contenido (MIME type)",
+																	"disabled": true
+																},
+																{
+																	"key": "documentType",
+																	"value": "OTHER",
+																	"description": "Tipo de documento"
+																},
+																{
+																	"key": "status",
+																	"value": "RECEIVED",
+																	"description": "Estado del documento",
+																	"disabled": true
+																},
+																{
+																	"key": "channel",
+																	"value": "API_INTEGRATION",
+																	"description": "Canal de distribución",
+																	"disabled": true
+																},
+																{
+																	"key": "uploadDateStart",
+																	"value": "1994-09-22T19:07:43.167Z",
+																	"description": "Fecha de inicio para filtrar",
+																	"disabled": true
+																},
+																{
+																	"key": "uploadDateEnd",
+																	"value": "1994-09-22T19:07:43.167Z",
+																	"description": "Fecha de fin para filtrar",
+																	"disabled": true
+																},
+																{
+																	"key": "sortBy",
+																	"value": "FILENAME",
+																	"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																},
+																{
+																	"key": "sortDirection",
+																	"value": "DESC",
+																	"description": "Dirección del ordenamiento (ASC o DESC)",
+																	"disabled": true
+																},
+																{
+																	"key": "page",
+																	"value": "1",
+																	"description": "Número de página (por defecto 1)",
+																	"disabled": true
+																},
+																{
+																	"key": "pageSize",
+																	"value": "10",
+																	"description": "Cantidad de registros por página (por defecto 10)",
+																	"disabled": true
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "Documentos encontrados correctamente",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														},
+														{
+															"name": "Criterios de búsqueda inválidos",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "Bad Request",
+															"code": 400,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "No autorizado",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "Unauthorized",
+															"code": 401,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Estás autenticado, pero no tienes permisos",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "Forbidden",
+															"code": 403,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Docomento no encontrado",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "Not Found",
+															"code": 404,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Error interno del servidor",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/documents?userId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&customerId=b63edb90-c8f2-8eda-a943-9caf565b1f1a&filename=string&contentType=string&documentType=FORM&status=SENT&channel=API_INTEGRATION&uploadDateStart=1994-09-22T19:07:43.167Z&uploadDateEnd=1994-09-22T19:07:43.167Z&sortBy=UPLOAD_DATE&sortDirection=ASC&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"documents"
+																	],
+																	"query": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del usuario (filtro de seguridad)"
+																		},
+																		{
+																			"key": "customerId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID del cliente"
+																		},
+																		{
+																			"key": "filename",
+																			"value": "string",
+																			"description": "Nombre del archivo a buscar"
+																		},
+																		{
+																			"key": "contentType",
+																			"value": "string",
+																			"description": "Tipo de contenido (MIME type)"
+																		},
+																		{
+																			"key": "documentType",
+																			"value": "FORM",
+																			"description": "Tipo de documento"
+																		},
+																		{
+																			"key": "status",
+																			"value": "SENT",
+																			"description": "Estado del documento"
+																		},
+																		{
+																			"key": "channel",
+																			"value": "API_INTEGRATION",
+																			"description": "Canal de distribución"
+																		},
+																		{
+																			"key": "uploadDateStart",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de inicio para filtrar"
+																		},
+																		{
+																			"key": "uploadDateEnd",
+																			"value": "1994-09-22T19:07:43.167Z",
+																			"description": "Fecha de fin para filtrar"
+																		},
+																		{
+																			"key": "sortBy",
+																			"value": "UPLOAD_DATE",
+																			"description": "[Obligatorio] Campo por el que ordenar (UPLOAD_DATE, FILENAME, STATUS, CHANNEL)"
+																		},
+																		{
+																			"key": "sortDirection",
+																			"value": "ASC",
+																			"description": "Dirección del ordenamiento (ASC o DESC)"
+																		},
+																		{
+																			"key": "page",
+																			"value": "1",
+																			"description": "Número de página (por defecto 1)"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)"
+																		}
+																	]
+																}
+															},
+															"status": "Internal Server Error",
+															"code": 500,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											],
+											"description": "## Carpetas en la raíz del proyecto\n\n- **DocumentStorage/**: es la carpeta destinada al almacenamiento final (Servicio externo de almacenamiento de ejemplo) de documentos (estructura por año/mes, p.ej. `DocumentStorage/2026/01/`).\n    \n- **temp/**: carpeta temporal usada durante el procesamiento y decodificación antes de mover al almacenamiento definitivo (Servicio externo).\n    \n\nAmbas carpetas están en la raíz del repositorio: [DocumentStorage](https://github.com/ISMARZDEV/DocumentManagement.Api/blob/developer/DocumentStorage) y [temp](https://github.com/ISMARZDEV/DocumentManagement.Api/blob/developer/temp).\n\n<img src=\"https://content.pstmn.io/a7bee8ce-3650-4d80-ae65-c213dc0e3139/aW1hZ2UucG5n\" alt=\"\" height=\"738\" width=\"1022\">"
+										},
+										{
+											"name": "health",
+											"item": [
+												{
+													"name": "Obtener estado de salud detallado",
+													"request": {
+														"method": "GET",
+														"header": [],
+														"url": {
+															"raw": "{{baseUrl}}/api/bhd/mgmt/1/health",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"bhd",
+																"mgmt",
+																"1",
+																"health"
+															]
+														},
+														"description": "Proporciona una revisión de salud detallada de la aplicación 'bhd-document-management-api' (Container bhd-sqlserver, Container bhd-api) y sus dependencias"
+													},
+													"response": [
+														{
+															"name": "OK",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/health",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"health"
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										},
+										{
+											"name": "users",
+											"item": [
+												{
+													"name": "actions",
+													"item": [
+														{
+															"name": "add-user",
+															"item": [
+																{
+																	"name": "Crea un nuevo usuario en el sistema.",
+																	"request": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"api",
+																				"bhd",
+																				"mgmt",
+																				"1",
+																				"users",
+																				"actions",
+																				"add-user"
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "Usuario creado correctamente",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"add-user"
+																					]
+																				}
+																			},
+																			"status": "Created",
+																			"code": 201,
+																			"_postman_previewlanguage": "text",
+																			"header": [],
+																			"cookie": [],
+																			"body": ""
+																		},
+																		{
+																			"name": "Criterios de validación inválidos",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"add-user"
+																					]
+																				}
+																			},
+																			"status": "Bad Request",
+																			"code": 400,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		},
+																		{
+																			"name": "No autorizado",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"add-user"
+																					]
+																				}
+																			},
+																			"status": "Unauthorized",
+																			"code": 401,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		},
+																		{
+																			"name": "Estás autenticado, pero no tienes permisos",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"add-user"
+																					]
+																				}
+																			},
+																			"status": "Forbidden",
+																			"code": 403,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		},
+																		{
+																			"name": "Error interno del servidor",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"name\": \"string\",\n  \"userName\": \"string\",\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"role\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/add-user",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"add-user"
+																					]
+																				}
+																			},
+																			"status": "Internal Server Error",
+																			"code": 500,
+																			"_postman_previewlanguage": "text",
+																			"header": [],
+																			"cookie": [],
+																			"body": ""
+																		}
+																	]
+																}
+															]
+														},
+														{
+															"name": "login",
+															"item": [
+																{
+																	"name": "Autentica el usuario y devuelve un token JWT.",
+																	"request": {
+																		"method": "POST",
+																		"header": [
+																			{
+																				"key": "Content-Type",
+																				"value": "application/json"
+																			},
+																			{
+																				"key": "Accept",
+																				"value": "text/plain"
+																			}
+																		],
+																		"body": {
+																			"mode": "raw",
+																			"raw": "{\n  \"email\": \"admin@prueba.com\",\n  \"password\": \"Candado6947!\"\n}",
+																			"options": {
+																				"raw": {
+																					"headerFamily": "json",
+																					"language": "json"
+																				}
+																			}
+																		},
+																		"url": {
+																			"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/login",
+																			"host": [
+																				"{{baseUrl}}"
+																			],
+																			"path": [
+																				"api",
+																				"bhd",
+																				"mgmt",
+																				"1",
+																				"users",
+																				"actions",
+																				"login"
+																			]
+																		}
+																	},
+																	"response": [
+																		{
+																			"name": "OK",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/login",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"login"
+																					]
+																				}
+																			},
+																			"status": "OK",
+																			"code": 200,
+																			"_postman_previewlanguage": "text",
+																			"header": [],
+																			"cookie": [],
+																			"body": ""
+																		},
+																		{
+																			"name": "Unauthorized",
+																			"originalRequest": {
+																				"method": "POST",
+																				"header": [
+																					{
+																						"key": "Content-Type",
+																						"value": "application/json"
+																					},
+																					{
+																						"key": "Accept",
+																						"value": "text/plain"
+																					},
+																					{
+																						"key": "Authorization",
+																						"value": "Bearer <token>",
+																						"description": "Added as a part of security scheme: bearer"
+																					}
+																				],
+																				"body": {
+																					"mode": "raw",
+																					"raw": "{\n  \"email\": \"string\",\n  \"password\": \"string\"\n}",
+																					"options": {
+																						"raw": {
+																							"headerFamily": "json",
+																							"language": "json"
+																						}
+																					}
+																				},
+																				"url": {
+																					"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/login",
+																					"host": [
+																						"{{baseUrl}}"
+																					],
+																					"path": [
+																						"api",
+																						"bhd",
+																						"mgmt",
+																						"1",
+																						"users",
+																						"actions",
+																						"login"
+																					]
+																				}
+																			},
+																			"status": "Unauthorized",
+																			"code": 401,
+																			"_postman_previewlanguage": "json",
+																			"header": [
+																				{
+																					"key": "Content-Type",
+																					"value": "application/json"
+																				}
+																			],
+																			"cookie": [],
+																			"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+																		}
+																	]
+																}
+															],
+															"description": "Login para acceder mediante uno de los siguientes usuarios:\n\n**1.1 Admin**  \nAcceso total. Puede cargar documentos para cualquier cliente, crear nuevos usuarios, ver la lista de usuarios y ver la lista completa de documentos cargados.\n\n``` json\n{\n  \"email\": \"admin@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**1.2 Operador**  \nAcceso limitado. Puede cargar documentos de clientes y ver el listado de clientes.\n\n``` json\n{\n  \"email\": \"operador@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n**1.3 Cliente**  \nUsuario final. Solo puede cargar sus propios documentos y ver sus documentos.\n\n``` json\n{\n  \"email\": \"cliente@prueba.com\",\n  \"password\": \"Candado6947!\"\n}\n\n ```\n\n- **Nota:** Copiar y pegar token en la varible Globals (bearerToken)\n    \n\n<img src=\"https://content.pstmn.io/c60fb044-3831-49c1-b6de-93fe3a358669/aW1hZ2UucG5n\" width=\"2780\" height=\"974\">"
+														}
+													]
+												},
+												{
+													"name": "Obtiene un usuario por su ID.",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"bhd",
+																"mgmt",
+																"1",
+																"users",
+																":userId"
+															],
+															"variable": [
+																{
+																	"key": "userId",
+																	"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																	"description": "ID único del usuario (GUID)."
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "OK",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		":userId"
+																	],
+																	"variable": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID único del usuario (GUID)."
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														},
+														{
+															"name": "Unauthorized",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		":userId"
+																	],
+																	"variable": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID único del usuario (GUID)."
+																		}
+																	]
+																}
+															},
+															"status": "Unauthorized",
+															"code": 401,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Forbidden",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		":userId"
+																	],
+																	"variable": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID único del usuario (GUID)."
+																		}
+																	]
+																}
+															},
+															"status": "Forbidden",
+															"code": 403,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Not Found",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		":userId"
+																	],
+																	"variable": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID único del usuario (GUID)."
+																		}
+																	]
+																}
+															},
+															"status": "Not Found",
+															"code": 404,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Internal Server Error",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/:userId",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		":userId"
+																	],
+																	"variable": [
+																		{
+																			"key": "userId",
+																			"value": "b63edb90-c8f2-8eda-a943-9caf565b1f1a",
+																			"description": "ID único del usuario (GUID)."
+																		}
+																	]
+																}
+															},
+															"status": "Internal Server Error",
+															"code": 500,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												},
+												{
+													"name": "Obtiene el listado de usuarios.",
+													"request": {
+														"method": "GET",
+														"header": [
+															{
+																"key": "Accept",
+																"value": "text/plain"
+															}
+														],
+														"url": {
+															"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/all?page=1&pageSize=10",
+															"host": [
+																"{{baseUrl}}"
+															],
+															"path": [
+																"api",
+																"bhd",
+																"mgmt",
+																"1",
+																"users",
+																"actions",
+																"all"
+															],
+															"query": [
+																{
+																	"key": "searchName",
+																	"value": "string",
+																	"description": "Búsqueda por nombre, username o email (opcional).",
+																	"disabled": true
+																},
+																{
+																	"key": "page",
+																	"value": "1",
+																	"description": "Número de página (por defecto 1)"
+																},
+																{
+																	"key": "pageSize",
+																	"value": "10",
+																	"description": "Cantidad de registros por página (por defecto 10)."
+																}
+															]
+														}
+													},
+													"response": [
+														{
+															"name": "OK",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/all?searchName=string&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		"actions",
+																		"all"
+																	],
+																	"query": [
+																		{
+																			"key": "searchName",
+																			"value": "string",
+																			"description": "Búsqueda por nombre, username o email (opcional)."
+																		},
+																		{
+																			"key": "page",
+																			"value": "1"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)."
+																		}
+																	]
+																}
+															},
+															"status": "OK",
+															"code": 200,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														},
+														{
+															"name": "Unauthorized",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/all?searchName=string&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		"actions",
+																		"all"
+																	],
+																	"query": [
+																		{
+																			"key": "searchName",
+																			"value": "string",
+																			"description": "Búsqueda por nombre, username o email (opcional)."
+																		},
+																		{
+																			"key": "page",
+																			"value": "1"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)."
+																		}
+																	]
+																}
+															},
+															"status": "Unauthorized",
+															"code": 401,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Forbidden",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Accept",
+																		"value": "text/plain"
+																	},
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/all?searchName=string&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		"actions",
+																		"all"
+																	],
+																	"query": [
+																		{
+																			"key": "searchName",
+																			"value": "string",
+																			"description": "Búsqueda por nombre, username o email (opcional)."
+																		},
+																		{
+																			"key": "page",
+																			"value": "1"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)."
+																		}
+																	]
+																}
+															},
+															"status": "Forbidden",
+															"code": 403,
+															"_postman_previewlanguage": "json",
+															"header": [
+																{
+																	"key": "Content-Type",
+																	"value": "application/json"
+																}
+															],
+															"cookie": [],
+															"body": "{\n  \"type\": \"string\",\n  \"title\": \"string\",\n  \"status\": 1034,\n  \"detail\": \"string\",\n  \"instance\": \"string\"\n}"
+														},
+														{
+															"name": "Internal Server Error",
+															"originalRequest": {
+																"method": "GET",
+																"header": [
+																	{
+																		"key": "Authorization",
+																		"value": "Bearer <token>",
+																		"description": "Added as a part of security scheme: bearer"
+																	}
+																],
+																"url": {
+																	"raw": "{{baseUrl}}/api/bhd/mgmt/1/users/actions/all?searchName=string&page=1&pageSize=10",
+																	"host": [
+																		"{{baseUrl}}"
+																	],
+																	"path": [
+																		"api",
+																		"bhd",
+																		"mgmt",
+																		"1",
+																		"users",
+																		"actions",
+																		"all"
+																	],
+																	"query": [
+																		{
+																			"key": "searchName",
+																			"value": "string",
+																			"description": "Búsqueda por nombre, username o email (opcional)."
+																		},
+																		{
+																			"key": "page",
+																			"value": "1"
+																		},
+																		{
+																			"key": "pageSize",
+																			"value": "10",
+																			"description": "Cantidad de registros por página (por defecto 10)."
+																		}
+																	]
+																}
+															},
+															"status": "Internal Server Error",
+															"code": 500,
+															"_postman_previewlanguage": "text",
+															"header": [],
+															"cookie": [],
+															"body": ""
+														}
+													]
+												}
+											]
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "/"
+		}
+	]
+}
