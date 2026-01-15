@@ -80,4 +80,34 @@ public class UserService : IUserService
 
         return response;
     }
+
+    public async Task<(List<UserDto> Users, int TotalCount)> GetAllUsersAsync(string? searchName, int pageNumber, int pageSize, string userRole)
+    {
+        var allUsers = await _userRepository.GetAllUsersAsync();
+
+        if (userRole == "Operador")
+        {
+            allUsers = allUsers.Where(u => u.Role == "Cliente").ToList();
+        }
+
+        if (!string.IsNullOrWhiteSpace(searchName))
+        {
+            allUsers = allUsers
+                .Where(u => u.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase) ||
+                            u.UserName.Contains(searchName, StringComparison.OrdinalIgnoreCase) ||
+                            u.Email.Contains(searchName, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        int totalCount = allUsers.Count;
+
+        var paginatedUsers = allUsers
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToList();
+
+        var userDtos = _mapper.Map<List<UserDto>>(paginatedUsers);
+
+        return (userDtos, totalCount);
+    }
 }
