@@ -10,7 +10,7 @@ API REST de gestión de carga y búsqueda de documentos. Diseñada para proporci
 
 <div align="center">
   <a href="TU_ENLACE_AQUI">
-    <img width="400" height="1100" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/91badbb3-64fc-4172-90e3-17d086c48efa" />
+    <img width="800" height="2200" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/91badbb3-64fc-4172-90e3-17d086c48efa" />
   </a>
   <p><i>Figura 1: Documentación - Arquitectura de solución</i></p>
 </div>
@@ -41,11 +41,11 @@ API REST de gestión de carga y búsqueda de documentos. Diseñada para proporci
 El desarrollo de esta API REST sigue estrictamente los principios de **Clean Architecture** (Arquitectura Limpia), separando las responsabilidades en capas concéntricas para garantizar la independencia de frameworks, UI y bases de datos.
 
 <div align="center">
-  <img width="300" height="300" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/61813877-5182-42a2-ab9f-f553ab376b8c" />
+  <img width="600" height="600" alt="Diagrama de Arquitectura" src="https://github.com/user-attachments/assets/61813877-5182-42a2-ab9f-f553ab376b8c" />
   <p><i>Figura 2: Diagrama de la arquitectura del sistema</i></p>
 </div>
 
-### Capas del Sistema
+### 🪢 Capas del Sistema
 
 1.  **Domain (Núcleo):** Contiene las Entidades (`Document`, `User`), Value Objects, Enums y las Interfaces de los Repositorios. **No tiene dependencias externas.**
 2.  **Application (Casos de Uso):** Contiene la lógica de negocio pura, DTOs, Validaciones y las Interfaces de Servicios. Orquesta el flujo de datos entre el Dominio y la Infraestructura.
@@ -59,6 +59,48 @@ El desarrollo de esta API REST sigue estrictamente los principios de **Clean Arc
 
 ---
 
+## 🔧 Arquitectura de Solución - Stack Tecnológico Completo
+
+Diagrama detallado que muestra la arquitectura integral de la solución con todos los servicios, tecnologías y componentes involucrados en el flujo de User y Document. Incluye integraciones con servicios externos, patrones de comunicación y componentes clave.
+
+<div align="center">
+  <img width="4812" height="3096" alt="Arquitectura de Solución Completa - Stack Tecnológico" src="https://github.com/user-attachments/assets/39af09dd-fea3-44b1-abde-aed7da5f26d1" />
+  <p><i>Figura 3: Arquitectura de Solución Completa - Stack Tecnológico y Servicios</i></p>
+</div>
+
+---
+
+## 📌 Diagrama de Clases - Entidades Domain
+
+El modelo de entidades está basado en herencia con **BaseEntity** como clase abstracta padre, implementando la relación **1 a Muchos (One-to-Many)** entre Usuario y Documento mediante composición.
+
+**Relaciones:**
+- **User** → **Document** (1 a Muchos): Un usuario puede cargar múltiples documentos
+- **BaseEntity**: Clase abstracta que proporciona propiedades comunes (`Id`, `CreatedAt`)
+
+<div align="center">
+  <img width="795" height="455" alt="Diagrama de Clases - User y Document" src="https://github.com/user-attachments/assets/6170a1a4-aa03-4004-87ac-4d5bb3360978" />
+  <p><i>Figura 4: Diagrama de Clases - Entidades Domain (User y Document)</i></p>
+</div>
+
+---
+
+## 🗄️ Diagrama Entidad-Relación (ER) - Modelo Relacional
+
+Representación del modelo de base de datos relacional implementado en SQL Server. Muestra las tablas, columnas, tipos de datos, claves primarias y relaciones de integridad referencial.
+
+**Tablas Principales:**
+- **Users**: Almacena información de usuarios (Admin, Operador, Cliente)
+- **Documents**: Almacena metadatos de documentos cargados
+- **Relación**: Foreign Key `UserId` establece la relación 1 a Muchos entre Users y Documents
+
+<div align="center">
+  <img width="598" height="480" alt="Diagrama Entidad-Relación (ER)" src="https://github.com/user-attachments/assets/8dbb1c2c-0589-4f3f-9965-0f31d087a08f" />
+  <p><i>Figura 5: Diagrama Entidad-Relación (ER) - Modelo Relacional SQL Server</i></p>
+</div>
+
+---
+
 ## 📂 Estructura de la Solución
 
 La solución mantiene una separación física clara para respetar la arquitectura:
@@ -66,16 +108,20 @@ La solución mantiene una separación física clara para respetar la arquitectur
 ```text
 📦 DocumentManagement.Api
  ┣ 📂 src
- ┃ ┣ 📂 Bhd.Domain             # Logica de negocio (Entidades, Interfaces, Repositorio...)
- ┃ ┣ 📂 Bhd.Application        # Casos de uso (DTOs, Services, Interfaces, Validators..)
- ┃ ┣ 📂 Bhd.Infrastructure     # Servicios externos (EF Core, Hangerfire, Handlers, Jobs, Persistance, Migrations...)
- ┃ ┗ 📂 Bhd.WebApi             # Presentacion (Controllers, Program.cs, Dockerfile...)
+ ┃ ┣ 📂 Bhd.Domain                # Núcleo del dominio (Entidades, Interfaces, Repositorio...)
+ ┃ ┣ 📂 Bhd.Application           # Casos de uso (DTOs, Services, Interfaces, Validators, Commands...)
+ ┃ ┣ 📂 Bhd.Infrastructure        # Adaptadores (EF Core, Hangfire, Handlers, Jobs, Persistance, Migrations...)
+ ┃ ┗ 📂 Bhd.WebApi                # Presentación (Controllers, Program.cs, Dockerfile, Middleware...)
  ┃
- ┣ 📂 tests                    # Pruebas Unitarias e Integración
- ┣ 📜 .dockerignore            # Ignorar archivos y carpetas que no son necesarias en la imagen
- ┣ 📜 docker-compose.yml       # Orquestación de contenedores
- ┣ 📘 LICENSE                  # Copyright(c) 2026 Ismael Martínez
- ┗ 📜 README.md                # Esta documentación
+ ┣ 📂 test                        # Pruebas Unitarias e Integración (xUnit, Moq, README_PRUEBAS)
+ ┣ 📂 scripts                     # Scripts de inicialización (init-db.sql, init-seed.sql, dev-up.sh...)
+ ┣ 📂 DocumentStorage             # Almacenamiento final (Ej. Azure Blob Storage, AWS S3, etc.) de documentos procesados (Estructura: año/mes)
+ ┣ 📂 temp                        # Almacenamiento temporal durante procesamiento
+ ┣ 📜 Bhd.DocumentManagement.sln  # Solución Visual Studio
+ ┣ 📜 docker-compose.yml          # Orquestación de contenedores (SQL Server + API)
+ ┣ 📜 Api.Postman.Colection.json  # Document Management API - Banco BHD.postman_collection
+ ┣ 📘 LICENSE                     # Copyright(c) 2026 Ismael Martínez
+ ┗ 📜 README.md                   # Esta documentación
  ```
 
 ---
@@ -86,11 +132,11 @@ La aplicación está contenerizada y configurada para autogestionarse (Migracion
 
 **Requisitos**
 
-Docker Desktop instalado y corriendo.
+Docker Desktop o CLI instalado y corriendo.
 
 **Paso para ejecutar**
 
-Para correr ejecutar el comando en la raíz del proyecto (📦 DocumentManagement.Api):
+Para poder ejecutar e inicializar la aplicacion, escribir el comando en la terminal de la raíz del proyecto (📦 DocumentManagement.Api):
 
 ```bash
 docker compose up -d
@@ -211,8 +257,8 @@ Se utilizó Hangfire para la Carga Asíncrona (Core Asíncrono) y para encolar t
 Se utilizó Hangfire para la Carga Asíncrona (Core Asíncrono) y para encolar tareas de procesamiento (procesado y almacenamiento de documentos) desde la API.
 
 <div align="center">
- <img width="511" height="369" alt="Image" src="https://github.com/user-attachments/assets/a0a4a0ac-4ccd-443d-9e67-e96c386fc82f" />
-  <p><i>Figura 3: Dashboard Hangfire (monitorizar jobs)</i></p>
+ <img width="511" height="369" alt="Dashboard Hangfire - Monitorizar Jobs" src="https://github.com/user-attachments/assets/a0a4a0ac-4ccd-443d-9e67-e96c386fc82f" />
+  <p><i>Figura 6: Dashboard Hangfire (monitorizar jobs)</i></p>
 </div>
 
 1. **Authenticación y Autorización** — POST Login para acceder mediante uno de los siguientes usuarios:
@@ -328,6 +374,25 @@ Ambas carpetas están en la raíz del repositorio: [DocumentStorage](DocumentSto
 - `application/vnd.openxmlformats-officedocument.spreadsheetml.sheet` — XLSX (Microsoft Excel)
 - `image/png` — PNG (Portable Network Graphics)
 - `image/jpeg` — JPG/JPEG (Joint Photographic Experts Group)
-- `text/plain` — TXT (Plain Text)
 
 **Reintentos de Hangfire:** 5 intentos de procesamiento con delays de 1 min, 2 min, 3 min, 5 min y 10 min. Tras agotarse, el documento se marca como `FAILED`.
+
+---
+
+## 📋 Backlog Items del Proyecto
+
+**Backlog Items, Test Cases, Epics** del proyecto:
+
+<div align="center">
+  <a href="https://github.com/users/ISMARZDEV/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Sub-issues+progress%22%2C%22Labels%22%2C%22Status%22%2C%22Linked+pull+requests%22%2C%22Parent+issue%22%2C%22Repository%22%2C%22Assignees%22%5D" target="_blank">
+<img width="3024" height="1964" alt="Image" src="https://github.com/user-attachments/assets/b58af903-2075-4342-a8ec-7a4a2c0de2dc" />
+
+  </a>
+  <p><strong>📊 Gestión del Proyecto en GitHub Project</strong></p>
+  <p>
+    <a href="https://github.com/users/ISMARZDEV/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Sub-issues+progress%22%2C%22Labels%22%2C%22Status%22%2C%22Linked+pull+requests%22%2C%22Parent+issue%22%2C%22Repository%22%2C%22Assignees%22%5D" target="_blank">
+      Ver Backlogs Item Completo
+    </a>
+  </p>
+</div>
+

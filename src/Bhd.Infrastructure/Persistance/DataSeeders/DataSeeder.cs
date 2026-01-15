@@ -95,48 +95,93 @@ namespace Bhd.Infrastructure.Persistance.DataSeeders
             {
                 new Document
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = operadorUserId,
-                    Filename = "kyc_document.pdf",
-                    ContentType = "application/pdf",
-                    DocumentType = DocumentType.KYC,
-                    Channel = DocumentChannel.DIGITAL,
-                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440005"),
-                    FileUrl = "https://storage.example.com/docs/kyc_001",
-                    Size = 2048576,
-                    Status = DocumentStatus.RECEIVED,
-                    CorrelationId = "CORR-2026-001-KYC",
-                    CreatedAt = DateTime.UtcNow
-                },
-                new Document
-                {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.Parse("cc2fef10-2bab-42a6-b665-79248d985265"),
                     UserId = clienteUserId,
-                    Filename = "contract_template.docx",
-                    ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                    Filename = "fail.pdf",
+                    ContentType = "application/pdf",
                     DocumentType = DocumentType.CONTRACT,
-                    Channel = DocumentChannel.BACKOFFICE,
-                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440003"),
-                    FileUrl = "https://storage.example.com/docs/contract_001",
-                    Size = 1048576,
-                    Status = DocumentStatus.SENT,
-                    CorrelationId = "CORR-2026-002-CONTRACT",
-                    CreatedAt = DateTime.UtcNow
+                    Channel = DocumentChannel.DIGITAL,
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = null,
+                    Size = 89446,
+                    Status = DocumentStatus.FAILED,
+                    CorrelationId = "80020",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:41:20.8335273")
                 },
                 new Document
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = operadorUserId,
-                    Filename = "supporting_docs.zip",
-                    ContentType = "application/zip",
+                    Id = Guid.Parse("1b036a5c-82d7-46e1-aaf3-bd9b23d792f3"),
+                    UserId = clienteUserId,
+                    Filename = "test document.docx",
+                    ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
                     DocumentType = DocumentType.SUPPORTING_DOCUMENT,
+                    Channel = DocumentChannel.BACKOFFICE,
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = "/app/DocumentStorage/2026/01/1b036a5c-82d7-46e1-aaf3-bd9b23d792f3_test document.docx",
+                    Size = 2285500,
+                    Status = DocumentStatus.SENT,
+                    CorrelationId = "80019",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:36:48.9631863")
+                },
+                new Document
+                {
+                    Id = Guid.Parse("da2154e8-8a0b-478c-bd8d-91cb25f5d9a5"),
+                    UserId = clienteUserId,
+                    Filename = "test document.xlsx",
+                    ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                    DocumentType = DocumentType.FORM,
+                    Channel = DocumentChannel.DIGITAL,
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = "/app/DocumentStorage/2026/01/da2154e8-8a0b-478c-bd8d-91cb25f5d9a5_test document.xlsx",
+                    Size = 9479,
+                    Status = DocumentStatus.SENT,
+                    CorrelationId = "80018",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:36:33.0352655")
+                },
+                new Document
+                {
+                    Id = Guid.Parse("ebc74bc8-a771-4cbf-b2b6-c821c6a964b3"),
+                    UserId = clienteUserId,
+                    Filename = "test_document.pdf",
+                    ContentType = "application/pdf",
+                    DocumentType = DocumentType.OTHER,
                     Channel = DocumentChannel.API_INTEGRATION,
-                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440004"),
-                    FileUrl = "https://storage.example.com/docs/support_001",
-                    Size = 5242880,
-                    Status = DocumentStatus.FAILED,
-                    CorrelationId = "CORR-2026-003-SUPPORT",
-                    CreatedAt = DateTime.UtcNow.AddDays(-1)
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = "/app/DocumentStorage/2026/01/ebc74bc8-a771-4cbf-b2b6-c821c6a964b3_test_document.pdf",
+                    Size = 89446,
+                    Status = DocumentStatus.SENT,
+                    CorrelationId = "80015",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:19:40.6844382")
+                },
+                new Document
+                {
+                    Id = Guid.Parse("35973e79-8ba6-492c-bb1e-e9ab2fd4d684"),
+                    UserId = operadorUserId,
+                    Filename = "test_image.jpg",
+                    ContentType = "image/jpeg",
+                    DocumentType = DocumentType.KYC,
+                    Channel = DocumentChannel.BACKOFFICE,
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = "/app/DocumentStorage/2026/01/35973e79-8ba6-492c-bb1e-e9ab2fd4d684_test_image.jpg",
+                    Size = 180110,
+                    Status = DocumentStatus.SENT,
+                    CorrelationId = "80016",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:32:47.8042926")
+                },
+                new Document
+                {
+                    Id = Guid.Parse("d1de9bc0-04ee-4dcc-93f7-6317c59d74bc"),
+                    UserId = clienteUserId,
+                    Filename = "test_image.png",
+                    ContentType = "image/png",
+                    DocumentType = DocumentType.CONTRACT,
+                    Channel = DocumentChannel.DIGITAL,
+                    CustomerId = Guid.Parse("550e8400-e29b-41d4-a716-446655440011"),
+                    FileUrl = "/app/DocumentStorage/2026/01/d1de9bc0-04ee-4dcc-93f7-6317c59d74bc_test_image.png",
+                    Size = 1255233,
+                    Status = DocumentStatus.RECEIVED,
+                    CorrelationId = "80017",
+                    CreatedAt = DateTime.Parse("2026-01-15T05:33:48.4928443")
                 }
             };
 
