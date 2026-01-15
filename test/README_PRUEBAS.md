@@ -10,7 +10,7 @@ Consulta los test cases completos de pruebas unitarias e integración en el GitH
 
 🔗 **[Ver Test Cases en GitHub Project](https://github.com/users/ISMARZDEV/projects/4/views/1?visibleFields=%5B%22Title%22%2C%22Sub-issues+progress%22%2C%22Labels%22%2C%22Status%22%2C%22Linked+pull+requests%22%2C%22Parent+issue%22%2C%22Repository%22%2C%22Assignees%22%5D&pane=issue&itemId=149707812&issue=ISMARZDEV%7CDocumentManagement.Api%7C19)**
 
-<img width="3024" height="1964" alt="Image" src="https://github.com/user-attachments/assets/b58af903-2075-4342-a8ec-7a4a2c0de2dc" />
+<img width="1024" alt="Image" src="/assets/Project-Backlogs-Items.png" />
 
 ## 🛠️ Tecnologías
 
