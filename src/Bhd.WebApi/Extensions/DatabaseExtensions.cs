@@ -18,7 +18,7 @@ public static class DatabaseExtensions
 
             logger.LogInformation("Aplicando migraciones de base de datos...");
             await context.Database.MigrateAsync();
-            logger.LogInformation("Migraciones aplicadas exitosamente.");
+            logger.LogInformation("Migraciones aplicadas exitosamente");
 
             var usersCount = await context.Users.CountAsync();
             if (usersCount == 0)
@@ -26,13 +26,13 @@ public static class DatabaseExtensions
                 logger.LogInformation("Ejecutando data seeder...");
                 var seeder = services.GetRequiredService<DataSeeder>();
                 await seeder.SeedAsync();
-                logger.LogInformation("Data seeder ejecutado exitosamente.");
+                logger.LogInformation("Data seeder ejecutado exitosamente");
             }
         }
         catch (Exception ex)
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
-            logger.LogError(ex, "Ocurrió un error al aplicar las migraciones o el seeding.");
+            logger.LogError(ex, "Ocurrió un error al aplicar las migraciones o el seeding");
             throw;
         }
     }

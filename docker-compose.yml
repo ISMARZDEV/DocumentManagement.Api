@@ -39,9 +39,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=bhd-db;Database=BhdDocumentDb;User Id=sa;Password=Candado6947!;TrustServerCertificate=True;
+      - COMPlus_EnableDiagnostics=0
     ports:
       - "5017:8080"
       - "7008:8081"
+    volumes:
+      - ./DocumentStorage:/app/DocumentStorage
+      - ./temp:/tmp
     networks:
       - bhd-network
     depends_on:
